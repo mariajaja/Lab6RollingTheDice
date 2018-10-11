@@ -1,8 +1,6 @@
 import java.util.Random;
 import java.util.Scanner;
 
-import org.omg.CORBA.PRIVATE_MEMBER;
-
 /**
  * 
  */
@@ -28,9 +26,18 @@ public class DiceRollerApp {
 		System.out.println("Welcome to the Grand Circus Casino!\n");
 
 		do {
-			// allows user input about sides on the die
-			System.out.print("How many sides should each die have? ");
-			sides = userDiceQuestion.nextInt();
+			// verify that sides are plausible
+			do {
+				// allows user input about sides on the die
+				System.out.print("How many sides should each die have? ");
+				sides = userDiceQuestion.nextInt();
+				if (sides > 1) {
+					// leave blank
+				} else {
+					System.out.println("Sorry this is not a valid number! " + "There must be at least 2 sides.");
+				}
+
+			} while (sides <= 1);
 
 			do {
 
@@ -50,7 +57,8 @@ public class DiceRollerApp {
 			} while (userContinueResponse.equals("y"));
 
 			// asks if user wants to start again with new sides
-			System.out.print("Would you like to try again with different die? ");
+			System.out.println(
+					"Would you like to try again with different die? \n(Press 'y' to continue, or any other key to quit)");
 			userContinueResponse = userContinueQuestion.nextLine();
 
 		} while (userContinueResponse.equals("y"));
@@ -77,12 +85,4 @@ public class DiceRollerApp {
 			// blank
 		}
 	}
-
-	private static boolean sidesIsValid(boolean isValid) {
-		
-		if (sides > 1) {
-			// blank
-		} else {
-			System.out.println("Sorry this is not a valid number! " + "There must be at least 2 sides.");
-		}	
-	}
+}
