@@ -20,24 +20,26 @@ public class DiceRollerApp {
 	public static void main(String[] args) {
 		Scanner userContinueQuestion = new Scanner(System.in);
 		Scanner userDiceQuestion = new Scanner(System.in);
-		int userDiceDecision;
+		int sides;
 //		String userStartAgain;
 		String userContinueResponse;
 
 		System.out.println("Welcome to the Grand Circus Casino!\n");
 
 		do {
-			Random rand = new Random(); // creates random number generator
 
 			// allows user input about sides on the die
-			System.out.print("How many sides should each die have?");
-			userDiceDecision = userDiceQuestion.nextInt();
+			System.out.print("How many sides should each die have? ");
+			sides = userDiceQuestion.nextInt();
 
 			// implement method to generate random roll
-			int diceResultFirst = rand.nextInt(userDiceDecision) + 1;
-			int diceResultSecond = rand.nextInt(userDiceDecision) + 1;
+			int diceResultFirst = generateRandomDieRoll(sides);
+			int diceResultSecond = generateRandomDieRoll(sides);
 
-			// call method for calling out results of di and special rolls
+			// call method for calling out results of die and special rolls
+			System.out.println("First roll: " + diceResultFirst + "\nSecond roll: " + diceResultSecond);
+
+			rollingASpecialCase(diceResultFirst, diceResultSecond);
 
 			// question about rolling again with same amount of sides
 			System.out.println("Roll again? (y/n)");
@@ -45,9 +47,28 @@ public class DiceRollerApp {
 
 			// add a way to start completely over? maybe
 		} while (userContinueResponse.equals("y"));
+
+		userDiceQuestion.close();
+		userContinueQuestion.close();
 	}
 
-	// create method to generate random numbers for the rolls
-	// create method if user got craps, snake eyes and box cars
-	// google what those^ are
+	// method that generates
+	private static int generateRandomDieRoll(int sides) {
+		Random rand = new Random(); // calls random number generator method
+		return rand.nextInt(sides) + 1;
+	}
+
+	// creates message if player rolls a special case
+	private static void rollingASpecialCase(int diceResultFirst, int diceResultSecond) {
+		if (diceResultFirst + diceResultSecond == 7) {
+			System.out.println("Congrats! You've rolled a craps!");
+		} else if (diceResultFirst == 1 && diceResultSecond == 1) {
+			System.out.println("Congrats! You've rolled a pair of snake eyes!");
+		} else if (diceResultFirst == 6 && diceResultSecond == 6) {
+			System.out.println("Congrats! You've rolled boxcars!");
+		} else {
+			// blank
+		}
+	}
+
 }
