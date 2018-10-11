@@ -1,6 +1,8 @@
 import java.util.Random;
 import java.util.Scanner;
 
+import org.omg.CORBA.PRIVATE_MEMBER;
+
 /**
  * 
  */
@@ -21,31 +23,36 @@ public class DiceRollerApp {
 		Scanner userContinueQuestion = new Scanner(System.in);
 		Scanner userDiceQuestion = new Scanner(System.in);
 		int sides;
-//		String userStartAgain;
 		String userContinueResponse;
 
 		System.out.println("Welcome to the Grand Circus Casino!\n");
 
 		do {
-
 			// allows user input about sides on the die
 			System.out.print("How many sides should each die have? ");
 			sides = userDiceQuestion.nextInt();
 
-			// implement method to generate random roll
-			int diceResultFirst = generateRandomDieRoll(sides);
-			int diceResultSecond = generateRandomDieRoll(sides);
+			do {
 
-			// call method for calling out results of die and special rolls
-			System.out.println("First roll: " + diceResultFirst + "\nSecond roll: " + diceResultSecond);
+				// implement method to generate random roll
+				int diceResultFirst = generateRandomDieRoll(sides);
+				int diceResultSecond = generateRandomDieRoll(sides);
 
-			rollingASpecialCase(diceResultFirst, diceResultSecond);
+				// call method for calling out results of die and special rolls
+				System.out.println("First roll: " + diceResultFirst + "\nSecond roll: " + diceResultSecond);
 
-			// question about rolling again with same amount of sides
-			System.out.println("Roll again? (y/n)");
+				rollingASpecialCase(diceResultFirst, diceResultSecond);
+
+				// question about rolling again with same amount of sides
+				System.out.print("Roll again with same sides? (y/n) ");
+				userContinueResponse = userContinueQuestion.nextLine();
+
+			} while (userContinueResponse.equals("y"));
+
+			// asks if user wants to start again with new sides
+			System.out.print("Would you like to try again with different die? ");
 			userContinueResponse = userContinueQuestion.nextLine();
 
-			// add a way to start completely over? maybe
 		} while (userContinueResponse.equals("y"));
 
 		userDiceQuestion.close();
@@ -71,4 +78,11 @@ public class DiceRollerApp {
 		}
 	}
 
-}
+	private static boolean sidesIsValid(boolean isValid) {
+		
+		if (sides > 1) {
+			// blank
+		} else {
+			System.out.println("Sorry this is not a valid number! " + "There must be at least 2 sides.");
+		}	
+	}
